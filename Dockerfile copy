@@ -1,0 +1,19 @@
+FROM python:3
+
+ENV FLASK_APP=app.py
+ENV FLASK_ENV=development
+
+USER root
+WORKDIR /usr/src/app
+
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . ./
+
+RUN cd / && mkdir CTF2022
+COPY FLAG.txt /CTF2022
+
+EXPOSE 5001
+
+ENTRYPOINT FLASK_APP=/usr/src/app/app.py flask run --host=0.0.0.0 
